@@ -1,0 +1,29 @@
+<h1>Пам'ятки Ужгорода</h1>
+
+<% if user_signed_in? %>
+  <%= link_to 'Додати пам’ятку', new_monument_path, class: 'btn btn-primary' %>
+<% end %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Назва</th>
+      <th>Опис</th>
+      <th>Дії</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @monuments.each do |monument| %>
+      <tr>
+        <td><%= link_to monument.name, monument %></td>
+        <td><%= monument.description %></td>
+        <td>
+          <% if user_signed_in? && monument.user == current_user %>
+            <%= link_to 'Редагувати', edit_monument_path(monument), class: 'btn btn-secondary' %>
+            <%= button_to 'Видалити', monument, method: :delete, data: { confirm: 'Ви впевнені?' }, class: 'btn btn-danger' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
